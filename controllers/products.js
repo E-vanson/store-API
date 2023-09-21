@@ -17,7 +17,13 @@ const createProduct = async(req, res) =>{
   }
 
   const deleteProduct = async(req, res) =>{
-    const products = await Products.deleteOne(req.body.id)
+    const {id:productId} = req.params
+    const products = await Products.deleteOne({_id:productId})
+    console.log(productId)
+    if(!products){
+        res.status(404).json({msg:`No product with id ${productId}`})
+    }
+    res.status(200).json({msg:"Deleted successfully"})
   }
 
 const getAllProducts = async (req, res)=>{
@@ -89,5 +95,6 @@ const getAllProducts = async (req, res)=>{
     module.exports={
         getAllProductsStatic,
         getAllProducts,
-        createProduct
+        createProduct,
+        deleteProduct
     }

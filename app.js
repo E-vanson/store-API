@@ -28,6 +28,7 @@ app.get('/', (req, res)=>{
 })
 
 app.use('/api/v1/products', productRoutes)
+app.use('/api/v1/products/:id', productRoutes)
 
 app.use(errorHandler)
 app.use(notFound)

@@ -10,6 +10,16 @@ const products = await Products.find({price:{ $gt:30}})
 res.status(200).json({products, nbHits:products.length})
 }
 
+const createProduct = async(req, res) =>{
+    const products = await Products.create(req.body)
+    console.log(req.body)
+    res.status(201).json({product: products})
+  }
+
+  const deleteProduct = async(req, res) =>{
+    const products = await Products.deleteOne(req.body.id)
+  }
+
 const getAllProducts = async (req, res)=>{
     const {featured, company, name, sort, field, numericFilters} = req.query
     const queryObject = {}
@@ -66,7 +76,7 @@ const getAllProducts = async (req, res)=>{
     
 
     const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || 10
+    const limit = Number(req.query.limit) || 30
     const skip = Number((page - 1) * limit)
     result.skip(skip).limit(limit)
 
@@ -78,5 +88,6 @@ const getAllProducts = async (req, res)=>{
 
     module.exports={
         getAllProductsStatic,
-        getAllProducts
+        getAllProducts,
+        createProduct
     }
